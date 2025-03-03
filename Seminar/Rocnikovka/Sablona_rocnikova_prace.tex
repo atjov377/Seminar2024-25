@@ -18,9 +18,9 @@
 % Školní rok
 \def\SkolniRok{2024/2025}
 % Seminář ve kterém práce vznikla
-\def\Seminar{Programovací seminář}
+\def\Seminar{Seminář z programování}
 % Datum dokončení práce
-\def\DatumDokonceni{Datum}
+\def\DatumDokonceni{17.1.2025}
 
 
 %% Definice různých užitečných maker (viz popis uvnitř souboru)
@@ -70,17 +70,17 @@ Private key (soukromý nebo také tajný klíč) je klíč sloužící v Asymetr
 \section{Padding a Padding schemes}
 Padding je způsob zabezpečení textu přidáním zbytečného a často nesmyslného textu navíc k původní zprávě před šifrováním. Slouží k zlepšené bezpečnosti textu, ta vzniká jelikož kdokoliv kdo se pokusí rozluštit šifru nemá jak určit které části jsou po rozšifrování plnohodnotný text a které jsou pouze náhodné znaky.
 
+
+
 \chapter{Co je to šifrovací algoritmus}
-Šifrovací algoritmy nebo také šifry jsou algoritmy pomocí kterých můžeme bezpečně posílat text po nezabezpečené cestě. To dělají použitím symetrické či asymetrické změny textu pomocí klíče, díky kterým z užitečného či čitelného textu udělají nesmyslný či nepoužitelný text. tento text pak může odesilatel bez problému poslat příjemci, který za použití stejného či jiného klíče zprávu vrátí do původní čitelné nebo použitelné verze. Díky tomuto nemůže kdokoliv bez přístupu ke klíči zprávu přečíst, za předpokladu že nemůže klíč nějakým způsobem získat. Šifrovací algoritmy dělíme na 2 základní kategorie:
-\section{Druhy šifrovacích algoritmů}
+Šifrovací algoritmy nebo také šifry jsou algoritmy pomocí kterých můžeme bezpečně posílat text po nezabezpečené cestě. To dělají použitím symetrické či asymetrické změny textu pomocí klíče, díky kterým z užitečného či čitelného textu udělají nesmyslný či nepoužitelný text. Tento text pak může odesilatel bez problému poslat příjemci, který za použití stejného či jiného klíče zprávu vrátí do původní čitelné nebo použitelné verze. Díky tomuto nemůže kdokoliv bez přístupu ke klíči zprávu přečíst, za předpokladu že nemůže klíč nějakým způsobem získat. 
 
-
-\subsection{Symetrické Šifrovací algoritmy}
+\section{Symetrické Šifrovací algoritmy}
 Symetrické šifrovací algoritmy používají stejný klíč na zašifrovaní i rozšifrování zprávy. Výhoda symetrických algoritmů spočívá v jejich často velmi malých a bezpečných klíčích, což přispívá k jejich nízké složitosti a jednoduchosti. Jejich největší problém ale spočívá ve výměně klíče, která musí proběhnout po zabezpečené cestě nebo musí být sama zašifrována aby nedošlo k získání klíče nežádanou osobou. Pokud totiž nějaká třetí strana získá klíč, nedojde pouze k rozšifrování zpráv cizí osobou, tato osoba také může vytvářet zprávy nové u kterých nebude odlišitelné zda jsou od původního odesílatele či od třetí strany. Pokud však k tomuto nedojde jsou tyto algoritmy zpravidla velmi bezpečné.
 
 Příklady Symetrický Šifrovacích algoritmů a jejich vysvětlení:
 
-\subsubsection {AES (Advanced Encryption standard - standard pokročilého šifrování)}
+\subsection {AES (Advanced Encryption standard - standard pokročilého šifrování)}
 AES je šifrovací algoritmus který je považován za jeden z bezpečnějších algoritmů protože byl vytvořen s cílem bezpečnosti vůči známým kryptoanalytickým útokům. Je rozdělen na tři standardy, které všechny používají stejný algoritmus pouze s jiným počtem kol. Tyto standardy jsou: AES-128 (používá 10 kol), AES-192 (používá 12 kol) a AES-256 (14 kol).
 
 Nejdříve si tento algoritmus rozdělí původní klíč na základě AES key schedule, který za pomocí bitových operací a hexadecimální soustavy vytvoří tolik klíčů (tzv. Round keys) na tolik klíčů, kolik je potřeba pro každý standard (každý standard potřebuje stejný počet klíčů jako je počet kol která provádí +1).
@@ -89,7 +89,7 @@ Následně AES začne se šifrováním dat. Nejdříve přidá první Round key 
 
 Při dešifrování se používají stejné kroky jako při šifrování, ale místo jednotlivých operací se používají jejich opaky (např. Inverzní posun řádků, který posune řádky doprava místo doleva. Kroky kola se odehrávají v následujícím pořadí: Inverzní ShiftRows, Inverzní SubBytes, AddRoundKey, a Inverzní MixCollums. Po dokončení všech kol dostaneme původní zprávu.
 
-\subsubsection{DES (Data Encryption standard - standard šifrování dat)}
+\subsection{DES (Data Encryption standard - standard šifrování dat)}
 DES je jeden ze starších šifrovacích algoritmů z 20. stol. V dnešní době je kvůli svému krátkému klíči o délce 64 bitů považován za nedostatečný, ale pro běžné použití je bezpečný. I Přes to že klíč je dlouhý 64 bitů, zkracuje se pomocí systému PC-1 na 56 bitů a zbylých 8 bitů je buď zahozeno nebo použito jako kontrola parity. Při každém kole se pak z 56 bitů vybírá systémem pc-2 pouze 48 bitů které jsou v něm použity jako klíč. Kvůli této délce byl DES nahrazen již zmíněným AES, které je oproti němu značně bezpečnější
 
 DES je založen na Vyhledávacích tabulkách a bitových operacích. Nejdříve si rozdělí data na 64. bitové bloky které jsou dány do čtvercové tabulky. Tabulku si následně rozdělí na dvě 32. bitové poloviny se kterými pracuje odděleně. Pravou polovinu nejdříve Rozšíří na 48 bitů pomocí pevné lookup table (E-box), následně provede XOR operaci a pomocí další lookup table (S-box) zmenší zpět na 32 bitů. Tyto změny mezi počty bitů dělají algoritmus více nelineární, což zlepšuje jeho bezpečnost.
@@ -98,17 +98,19 @@ DES je založen na Vyhledávacích tabulkách a bitových operacích. Nejdříve
 
 Při dešifrování DES používá stejné kroky jako při šifrování ale v opačném pořadí. 
 
-\subsubsection{One time pad (jednorázová tabulková šifra)}
-OTP je speciální šifrovací algoritmus který je nemožné prolomit za splnění jednoduchých podmínek: Klíč je stejně nebo delší než šifrovaný text, klíč není nikdy znovu použit a klíč je plně náhodný. Nevýhoda tohoto způsobu šifrování je hlavně sdílení klíčů, který je potřeba na každou zprávu nový. Jelikož klíče musí být vždy stejně velké nebo větší než posílaná zpráva a stejně jako zpráva musí být poslány bezpečnou cestou, je většinou zdaleka jednoduší použít bezpečnou cestu kterou bychom použili na předání klíče k předání zprávy. Kvůli tomu jsou OTP velmi málo používané a v dnešní době oproti ostatním algoritmům zastaralé.
+\subsection{One time pad (jednorázová tabulková šifra)}
+OTP je speciální šifrovací algoritmus který je nemožné prolomit za splnění jednoduchých podmínek: Klíč je stejně nebo delší než šifrovaný text, klíč není nikdy znovu použit a klíč je plně náhodný. Nevýhoda tohoto způsobu šifrování je hlavně sdílení klíčů, který je potřeba na každou zprávu nový. 
+
+Jelikož klíče OTP musí být vždy stejně velké nebo větší než posílaná zpráva a stejně jako zpráva musí být poslány bezpečnou cestou, je většinou zdaleka jednoduší použít bezpečnou cestu kterou bychom použili na předání klíče k předání zprávy. Kvůli tomu jsou OTP velmi málo používané a v dnešní době oproti ostatním algoritmům zastaralé.
 
 
 
-\subsection{Asymetrické šifrovací algoritmy}
+\section{Asymetrické šifrovací algoritmy}
 Asymetrické šifrovací se od symetrických liší několika způsoby. Jeden z největších je ale Rozdílnost šifrovacího a dešifrovacího klíče. Díky tomu mohou tyto mnohem lépe zajistit svou bezpečnost jelikož musí chránit pouze dešifrovací klíč (private key), zatímco šifrovací klíč (public key) mohou bez problému poslat do světa. Pokud někdo chce poslat zašifrovanou zprávu stačí si od příjemce vyžádat jejich public key a poté jim zprávu poslat zašifrovanou pomocí tohoto klíče. Příjemce si pak pomocí svého private key zprávu rozšifruje a získá tak původní text. Hlavní nevýhoda těchto algoritmů ale spočívá ve velikosti jejich klíčů a komplexitě algoritmů. Z tohoto důvodu se tyto algoritmy často používají na zašifrování klíče pro Symetrický algoritmus, který je pak používán pro zbytek zpráv. 
 
 Příklady Asymetrických algoritmů a jejich popis:
 
-\subsubsection{RSA (Rivest-Shamir-Adleman)}
+\subsection{RSA (Rivest-Shamir-Adleman)}
 RSA je jeden z nejznámějších šifrovacích algoritmů, který je používán v dnešní době na zabezpečení komunikace mezi počítači a sdílení klíčů. Kvůli své převážně pomalé rychlosti se RSA příliš nepoužívá na šifrování samotných dat uživatelů. Jeho bezpečnost je postavená na prvočíselných základech klíčů, mocninách a funkci modulo. Hlavní nevýhoda RSA je že jelikož nepoužívá žádné náhodné prvky je možné prolomit veškeré jeho klíče, ale prolomení jednoho je i s nejvýkonnějšími počítači téměř nemožný úkol, a to obzvlášť když použijeme správný padding scheme. S nástupem kvantových počítačů se toto však stává znovu problémem jelikož je pro ně takovýto úkol zdaleka jednodušší než pro běžné počítače.
 
 Na vytvoření klíčů v RSA je nejdříve potřeba náhodně vybrat 2 velká prvočísla p a q. Tento krok se nejčastěji řeší pomocí generování náhodných celých čísel a testovaní jejich prvočíselnosti. Po získaní dvou prvočísel získáme jejich vynásobením modulus, který je součástí jak public tak private key. Dále algoritmus vypočítá $\lambda$n, který se rovná nejmenšímu společnému násobku čísel p-1 a q-1 a zvolí si e (exponent při šifrování) tak aby platilo:
@@ -131,7 +133,7 @@ Pro dešifrování RSA používá stejný vzorec pouze s jiným exponentem:
 
 $ m \equiv c^e \pmod n$
 
-\subsubsection{Diffie-Hellman}
+\subsection{Diffie-Hellman}
 Diffie-Hellman (DH) funguje podobně jako RSA na základě funkce modulo a mocnění. Slouží převážně k jednorázovému poslání klíče jiného šifrovacího algoritmu, ale může sám být použit na šifrování zpráv.
 
 DH je založen na prvotní dohodě obou stran na public key, který následně upravují aby získaly stejný private key. Obě strany po dohodnutí na public key (p, g) vytvoří svůj náhodný tajný klíč (a), který kombinující s Public key pomocí následujícího vzorce:
@@ -139,10 +141,6 @@ DH je založen na prvotní dohodě obou stran na public key, který následně u
 $ A = g^a \mod p$
 
 Tímto vznikne meziklíč A, který DH pošle po veřejném kanále druhé straně. Po přijetí meziklíče od druhé strany provede DH s tímto meziklíčem stejnou operaci jako dříve, čímž se dostanou obě strany ke stejnému skrytému klíči.
-
-\subsubsection{ELGamal signature scheme (podpisové schéma E)}
-ElGamal je 
-
 
 
 \chapter{Praktická část - vlastní implementace RSA}
@@ -153,6 +151,9 @@ Na praktickou část mé seminární práce jsem se rozhodl vytvořit vlastní i
 Má implementace algoritmu RSA je z velké části založená na komunikaci skrze textové soubory. K tomuto rozhodnutí jsem dospěl převážně kvůli mé z počátku nedostatečné znalosti způsobů komunikace mezi zařízeními. Tento způsob má samozřejmé nevýhody jako jsou nutnost cloudového úložiště pro komunikaci mezi více počítači a neefektivnost přenosu dat, slouží proto má implementace spíše jako koncept na implementaci která je rychlejší, ale více náročná na ukládání dat.
 
 \section{Postup tvorby programu}
+
+\url{https://github.com/atjov377/Seminar2024-25}
+
 Má implementace byla rozdělena na dvě hlavní části. První část spočívala v generování prvočísel a zpracování prvočísel do klíče. Na generování prvočísel jsem nejdříve vytvořil oddělený program, který jsem později propojil s hlavním programem a stala se z něj tak třída GeneratePrimes. Na generování klíčů jsem se nejdříve pokoušel použít alternativní metodu, která jsem ale později zjistil že je matematicky chybná a proto jsem pře-implementoval generování klíčů do standardního postupu RSA vyjma vybírání náhodných prvočísel. 
 
 Druhá část spočívala v samotném šifrování a dešifrování. Tato část využívá víceméně standardní šifrování RSA ale místo posílání přímo druhé straně ukládá zašifrovaný text do souboru který si může druhý program přečíst. Díky způsobu mé implementace RSA může program bez problému běžet v několika instancích naráz a dokázal by s pouze minimálními úpravami běžet i přes cloud. Hlavní nevýhoda této implementace je však chybějící padding který jsem se rozhodl nepřidávat z důvodu výrazně zvýšené komplexity programu. 
@@ -160,13 +161,99 @@ Druhá část spočívala v samotném šifrování a dešifrování. Tato část
 
 
 \chapter{Závěr}
-Toto je závěr mé ročníkové práce.
+V této práci jsem popsal jak fungují různé šifrovací algoritmy, jejich výhody a nevýhody a případná omezení. Také jsem zde popsal svou vlastní implementaci šifrovacího algoritmu RSA včetně výhod a nevýhod mé implementace.
 
 %%% Seznam použité literatury
 \begin{thebibliography}{99}
 
-\bibitem{birge}
-Birge J. R., Wets R. J.-B. (1987): Computing bounds for stochastic programing problems by means of a generalized moment problem. \textit{Mathematics of Operations Research} \textbf{12}, 149-162.
+\bibitem{OTP1}
+8.2 the one-time pad and perfect secrecy. (n.d.).
+\url{https://www.teach.cs.toronto.edu/~csc110y/fall/notes/08-cryptography/02-one-time-pad.html}
+
+\bibitem{AES1}
+Advanced encryption standard (AES). (n.d.).
+\url{https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.197-upd1.pdf}
+
+\bibitem{DES1}
+GeeksforGeeks. (2023, September 20). Data Encryption Standard (DES): Set 1.
+\url {https://www.geeksforgeeks.org/data-encryption-standard-des-set-1/}
+
+\bibitem{AES2}
+GeeksforGeeks. (2024, July 16). Advanced encryption standard (AES).
+\url {https://www.geeksforgeeks.org/advanced-encryption-standard-aes/}
+
+\bibitem{RSA1}
+Keating, J., \& Tom Rocks Math. (2023, January 13). How does RSA Cryptography work?
+\url{https://www.youtube.com/watch?v=qph77bTKJTM}
+
+\bibitem{DES2}
+Kumar, A. (2024, December 24). Data Encryption Standard (DES): Key role in cryptography. Simplilearn.com.
+\url{https://www.simplilearn.com/what-is-des-article}
+
+\bibitem{RSA2}
+Neckar, J. (n.d.). Algoritmus RSA.
+\url{https://www.algoritmy.net/article/4033/RSA}
+
+\bibitem{RSA3}
+RSA algorithm in cryptography: Rivest Shamir Adleman explained. Splunk. (n.d.).
+\url{https://www.splunk.com/en_us/blog/learn/rsa-algorithm-cryptography.html#:~:text=Rivest%20Shamir%20Adleman%20(RSA)%20is,private%20and%20public%20key%20pair.}
+
+\bibitem{DH1}
+Spanning Tree. (2024, May 27). Diffie-Hellman Key Exchange: How to Share a Secret.
+\url{https://www.youtube.com/watch?v=85oMrKd8afY}
+
+\bibitem{DES3}
+Wikimedia Foundation. (2023, November 6). Des supplementary material. Wikipedia.
+\url{https://en.wikipedia.org/wiki/DES_supplementary_material}
+
+\bibitem{AES3}
+Wikimedia Foundation. (2024a, September 22). Aes key schedule. Wikipedia.
+\url{https://en.wikipedia.org/wiki/AES_key_schedule} 
+
+\bibitem{OTP2}
+Wikimedia Foundation. (2024b, October 6). One-time pad. Wikipedia.
+\url{https://en.wikipedia.org/wiki/One-time_pad}
+
+\bibitem{RSA4}
+Wikimedia Foundation. (2024c, November 5). Carmichael function. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Carmichael_function}
+
+\bibitem{AES4}
+Wikimedia Foundation. (2024d, November 5). Rijndael S-box. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Rijndael_S-box}
+ 
+\bibitem{AES5}
+Wikimedia Foundation. (2024e, December 21). Advanced encryption standard. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Advanced_Encryption_Standard}
+
+\bibitem{DES4}
+Wikimedia Foundation. (2025a, January 4). Data Encryption Standard. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Data_Encryption_Standard#The_Feistel_(F)_function}
+
+\bibitem{RSA5}
+Wikimedia Foundation. (2025b, January 7). RSA (cryptosystem). Wikipedia.
+\url{https://en.wikipedia.org/wiki/RSA_(cryptosystem)}
+
+\bibitem{AES6}
+Wikimedia Foundation. (2025c, January 9). Rijndael Mixcolumns. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Rijndael_MixColumns}
+
+\bibitem{RSA6}
+Wikimedia Foundation. (2025d, January 14). Primality Test. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Primality_test}
+
+\bibitem{DH2}
+Wikimedia Foundation. (2025e, January 16). Diffie–Hellman Key Exchange. Wikipedia.
+\url{https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange}
+
+\bibitem{RSA7}
+Woo, E. (2014a, November 4). The RSA Encryption Algorithm (1 of 2: Computing an Example). YouTube.
+\url{https://www.youtube.com/watch?v=4zahvcJ9glg}
+
+\bibitem{RSA8}
+Woo, E. (2014b, November 4). The RSA Encryption Algorithm (2 of 2: Generating the Keys). YouTube.
+\url{https://www.youtube.com/watch?v=oOcTVTpUsPQ}
+
 \end{thebibliography}
 
 %%% Prostor pro přílohy práce

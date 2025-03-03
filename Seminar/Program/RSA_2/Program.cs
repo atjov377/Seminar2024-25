@@ -30,24 +30,28 @@ namespace RSA_1
         Random rng = new Random();
         List<BigInteger> Primes = new List<BigInteger>();
         private int MinPrime;
-        private string PrimePath = "Primes.txt"; // Path has to be adjusted based on pc // Path of text file of Prime numbers
-        private string EncryptPath = "Message to encrypt.txt"; // Path has to be adjusted based on pc // Path of text file to be encrypted
-        private string DecryptPath = "Encrypted message.txt"; // Path has to be adjusted based on pc // Path of text file to be Decrypted / path of encrypted file
-        private string EndMessagePath = "Decrypted message.txt"; // Path has to be adjusted based on pc // Path of text file with end message
-        private string PublicKeysPath = "Public keys.txt"; // Path has to be adjusted based on pc // Path of text file with public keys
+        private string PrimePath = "Primes.txt"; // Path of text file of Prime numbers
+        private string EncryptPath = "Message to encrypt.txt"; // Path of text file to be encrypted
+        private string DecryptPath = "Encrypted message.txt"; // Path of text file to be Decrypted / path of encrypted file
+        private string EndMessagePath = "Decrypted message.txt"; // Path of text file with end message
+        private string PublicKeysPath = "Public keys.txt"; // Path of text file with public keys
 
         public void StartRSA()
         {
-            Console.WriteLine("Do you want to Clear Public keys?");
+            Console.WriteLine("This program is an instance of encryption algorithm RSA, made to comunicate with itself and other instances on one pc.");
+            Console.WriteLine("Please use YES/NO for answers");
+
+            Console.WriteLine("Do you want to delete all Public keys? \nWARNING Do this only after all other instances have been turned off or you will not be able to send messages to them."); ////////////////////////////////////
             string Clear = Console.ReadLine();
-            if (Clear == "Yes" || Clear == "yes")
+            if (Clear.ToLower() == "yes")
             {
                 File.WriteAllText(PublicKeysPath, "");
             }
-            Console.WriteLine("What is the name of this instance?");
+            Console.WriteLine("What is the name of this instance? \nThis name is used to send messages from other instances");
             InstanceName = Console.ReadLine();
-            Console.WriteLine("What is the minimal Prime number position?");
-            MinPrime = int.Parse(Console.ReadLine()); //Minimal prime number position
+
+            
+            
             GenerateKeys();
             Console.WriteLine("Now you can start your other instance and than press enter to continue");
             Console.ReadLine();
@@ -78,7 +82,6 @@ namespace RSA_1
                         List<BigInteger> message = new List<BigInteger>();
                         for (int i = 0; i < stringMessage.Length - 1; i++)
                         {
-                            Console.WriteLine(stringMessage[i]);
                             message.Add(BigInteger.Parse(stringMessage[i]));
                         }
                         Decrypt(message);
@@ -91,15 +94,19 @@ namespace RSA_1
         {
             using (StreamReader sr = new StreamReader(PrimePath))
             {
-                Console.WriteLine("Please wait for keys to be generated");
                 while (sr.Peek() != -1)
                 {
                     Primes.Add(BigInteger.Parse(sr.ReadLine()));
                 }
             }
 
-            if (MinPrime >= Primes.Count - 1) 
-            { 
+            Console.WriteLine("What is the minimal Prime number position? \nThis decides how secure your keys are but if you choose to make it too large the program might have to generate additional Prime numbers.");
+            MinPrime = int.Parse(Console.ReadLine());    //Minimal prime number position
+            Console.WriteLine("Please wait for keys to be generated");
+
+            while (MinPrime >= Primes.Count - 1) 
+            {
+                
                 Console.WriteLine("Your minimal Prime number position is too large, please select a lower minimal prime number position or generate more prime numbers");
                 Console.WriteLine("Do you want to generate more primes?");
                 if (Console.ReadLine().ToLower() == "yes")
@@ -108,8 +115,14 @@ namespace RSA_1
                     primesGeneration.Generate(PrimePath);
                     Console.WriteLine("Your primes have been generated, please restart the program to continue");
                     Console.ReadLine();
+                    throw new Exception();
                 }
-                throw new Exception(); 
+                else 
+                {
+                    Console.WriteLine("What is the minimal Prime number position? This decides how secure your keys are but if you choose to make it too large the program might have to generate additional Prime numbers.");
+                    MinPrime = int.Parse(Console.ReadLine());    //Minimal prime number position
+                    Console.WriteLine("Please wait for keys to be generated");
+                }
             }
 
             Prime1 = Primes[rng.Next(MinPrime, Primes.Count - 1)];
@@ -137,7 +150,7 @@ namespace RSA_1
                     string line = sr.ReadLine();
                     string[] lineArray = line.Split();
                     if (lineArray[0] == InstanceName) HadPublicKey = true;
-                    else PublicKeys.Append(line);
+                    else PublicKeys.Append(line + "\n");
                 }
             }
             if (HadPublicKey)
@@ -174,8 +187,6 @@ namespace RSA_1
                 }
                 if (PrimesMultiplied == 0) { Console.WriteLine("This address does not exist"); return; }
             }
-            Console.WriteLine(PrimesMultiplied);
-            Console.WriteLine(CypherExponent);
             using (StreamWriter sw = new StreamWriter(DecryptPath))
             {
                 for (int i = 0; i < message.Length; i++) { sw.Write(BigInteger.ModPow(message[i], CypherExponent, PrimesMultiplied)); sw.Write(" "); }
@@ -183,16 +194,11 @@ namespace RSA_1
         }
         public void Decrypt(List<BigInteger> message)
         {
-            Console.WriteLine(string.Join(" ", message));
-            Console.WriteLine(DecryptExponent);
-            Console.WriteLine(PublicPrimesMultiplied);
-
             using StreamWriter sw = new StreamWriter(EndMessagePath);
             for (int i = 0; i < message.Count; i++)
             {
                 sw.Write((char)BigInteger.ModPow(message[i], DecryptExponent, PublicPrimesMultiplied));
             }
-
         }
         public static BigInteger LeastCommonMultiple(BigInteger a, BigInteger b)
         {
